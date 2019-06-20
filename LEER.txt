@@ -1,0 +1,8 @@
+Integrantes: Arias, Tomás Agustín
+	     Galati, Gianlucas
+	     Ferrero, Santiago Raúl
+
+Se ejecuta desde menu, requiere Python 3, pattern y PySimpleGUI para ejecutar.
+El reporte de errores está comentado para evitar problemas con ciertas palabras.
+Las opciones "Tipografías" y "Estilo" no están implementadas.
+Se debe presionar "Verificar Palabras" para habilitar el botón "Aceptar"
