@@ -137,7 +137,7 @@ def play(listita,cant,vert,caps,ayuda,color):
 	layout=[[sg.Graph(canvas_size=(30*y,30*x), graph_bottom_left=(-0.1,-0.1), graph_top_right=(y+0.1,x+0.1), background_color='White', enable_events= True, key= 'graph', visible= True)],
 			[sg.Button('Ayuda',disabled=True,key='Ayuda'),sg.Button('Iniciar')],
 			[sg.Button('Sustantivo'),sg.Button('Adjetivo'),sg.Button('Verbo')],
-			[sg.Cancel('Salir')]]
+			[sg.Cancel('Salir'),sg.Button('Verificar')]]
 
 	win=sg.Window('Grafiquito',layout).Finalize()
 	grafo=win.Element('graph')
@@ -169,6 +169,12 @@ def play(listita,cant,vert,caps,ayuda,color):
 	actual='sustantivo'
 	while True:
 		event,values = win.Read()
+		if event == 'Verificar':
+			if listaMatrices[1]==listaMatrices[2]:
+				sg.Popup('Felicidades, completaste el juego!')
+				break
+			else:
+				sg.Popup('No es la solucion correcta')
 		if event == 'Ayuda':
 			defino=''
 			for i in defi:
