@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 import json
 
 
-def config(cant,vert,caps,ayuda):
+def config(lista,cant,vert,caps,ayuda):
 	def seleccionarColor():
 	    color=''
 	    col=[[sg.Text('Seleccionar un color')],[sg.Button('Rojo',size=(7,1),button_color=('white','red')),sg.Button('Azul',size=(7,1),button_color=('white','blue'))],
@@ -20,7 +20,6 @@ def config(cant,vert,caps,ayuda):
 	                break
 	        if event == 'Rojo':
 	            color= 'red'
-	            print('seleccione rojo')
 	            break
 	        if event == 'Azul':
 	            color= 'blue'
@@ -41,7 +40,6 @@ def config(cant,vert,caps,ayuda):
 	    return color
 
 	num={}
-	lista=[['','']]
 	color={'sustantivo':('Red'),'adjetivo':('Green'),'verbo':('Purple')}
 	vert=True
 	caps=True
@@ -94,7 +92,6 @@ def config(cant,vert,caps,ayuda):
 			color['sustantivo']=seleccionarColor()
 		if event == 'coladj':
 			color['adjetivo']=seleccionarColor()
-		print(color)
 		if event=='Ingresar palabras':
 			pal=[[sg.Input(key='palabra'),sg.Button('Ingresar')],
 				[sg.Table(values=lista,headings=['Palabra','Tipo'],key='tabla',def_col_width=16,auto_size_columns=False)],
@@ -143,7 +140,6 @@ def config(cant,vert,caps,ayuda):
 									sg.Popup('La palabra no se reconoce como adjetivo, sustantivo o verbo en el modulo pattern')
 									tipop='sad'
 						if (not result==None):
-							print(result.sections)
 							flag=True
 							for i in range(len(result.sections)):
 								if ('Etimología' in str(result.sections[i]) and flag):

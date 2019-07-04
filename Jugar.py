@@ -8,39 +8,36 @@ def play(listita,cant,vert,caps,ayuda,color):
 	lista=[]
 	defi=[]
 	tipo=[]
-	for i in listita:
-		if i[1]=='sustantivo':
-			if cant[0]>0:
-				cant[0]=cant[0]-1
-				if caps:
-					lista.append(i[0].upper())
-					tipo.append(i[1])
-				else:
-					lista.append(i[0])
-					tipo.append(i[1])
-				defi.append(i[2])
+	while not cant==[0,0,0]:
+		i=ran.randrange(1,len(listita))
+		palabra=listita[i]
+		if caps:
+			palabra[0]=palabra[0].upper()
 		else:
-			if i[1]=='adjetivo':
-				if cant[1]>0:
-					cant[1]=cant[1]-1
-					if caps:
-						lista.append(i[0].upper())
-						tipo.append(i[1])
-					else:
-						lista.append(i[0])
-						tipo.append(i[1])
-					defi.append(i[2])
+			palabra[0]=palabra[0].lower()
+		if not (palabra[0] in lista):
+			if palabra[1]=='sustantivo':
+				if cant[0]>0:
+					cant[0]=cant[0]-1
+					lista.append(palabra[0])
+					tipo.append(palabra[1])
+					defi.append(palabra[2])
 			else:
-				if i[1]=='verbo':
-					if cant[2]>0:
-						cant[2]=cant[2]-1
-						if caps:
-							lista.append(i[0].upper())
-							tipo.append(i[1])
-						else:
-							lista.append(i[0])
-							tipo.append(i[1])
-						defi.append(i[2])
+				if palabra[1]=='adjetivo':
+					if cant[1]>0:
+						cant[1]=cant[1]-1
+						lista.append(palabra[0])
+						tipo.append(palabra[1])
+						defi.append(palabra[2])
+				else:
+					if palabra[1]=='verbo':
+						if cant[2]>0:
+							cant[2]=cant[2]-1
+							lista.append(palabra[0])
+							tipo.append(palabra[1])
+							defi.append(palabra[2])
+			
+	
 	if(caps):
 		for i in lista:
 			i=i.upper()
@@ -81,11 +78,6 @@ def play(listita,cant,vert,caps,ayuda,color):
 						listaMatrices[0][posUno][posDos-i-1]=char
 				else:
 					for i in range(0,int(posDos+0.5)):
-						print(listaMatrices)
-						print(len(listaMatrices[0]))
-						print(posUno)
-						print(len(listaMatrices[0][posUno]))
-						print(i)
 						char= ran.choice(string.ascii_uppercase)
 						listaMatrices[0][posUno][i]=char
 			else:
@@ -104,8 +96,6 @@ def play(listita,cant,vert,caps,ayuda,color):
 						listaMatrices[0][posUno][i]=char
 				else:
 					for i in range(int(posDos+0.5+len(pruebita)),maxY):
-						print(i)
-						print(posDos+0.5+len(pruebita))
 						char= ran.choice(string.ascii_uppercase)
 						listaMatrices[0][posUno][i]=char
 			else:
@@ -119,23 +109,18 @@ def play(listita,cant,vert,caps,ayuda,color):
 						listaMatrices[0][posUno][i]=char
 			for i in range(len(pruebita)):
 				if vert:
-					print(len(listaMatrices[0]))
-					print(len(listaMatrices[0][posUno]))
-					print(posDos-i)
-					print(listaMatrices[0][0])
 					listaMatrices[0][posUno][posDos-i]=pruebita[i]
 					listaMatrices[1][posUno][posDos-i]=str(tipo)
 				else:
 					listaMatrices[0][posUno][posDos+i]=pruebita[i]
 					listaMatrices[1][posUno][posDos+i]=tipo
 
-		print(listaMatrices[1])
 		return listaMatrices
 
 	listaMatrices= [[],[],[]]
 
 	layout=[[sg.Graph(canvas_size=(30*y,30*x), graph_bottom_left=(-0.1,-0.1), graph_top_right=(y+0.1,x+0.1), background_color='White', enable_events= True, key= 'graph', visible= True)],
-			[sg.Button('Ayuda',disabled=True,key='Ayuda'),sg.Button('Iniciar')],
+			[sg.Button('Ayuda',disabled=True,key='Ayuda')],
 			[sg.Button('Sustantivo'),sg.Button('Adjetivo'),sg.Button('Verbo')],
 			[sg.Cancel('Salir'),sg.Button('Verificar')]]
 
@@ -163,10 +148,15 @@ def play(listita,cant,vert,caps,ayuda,color):
 			listaMatrices=haceMatriz(int(i+0.5),int(inicioY-0.5),lista[i],tipo[i],listaMatrices,x)
 		else:
 			inicioY= (ran.randrange(0,y-(len(lista[i])-1)))+0.5
-			print(lista[i])
 			listaMatrices=haceMatriz(int(i+0.5),int(inicioY-0.5),lista[i],tipo[i],listaMatrices,y)
 	go=False
 	actual='sustantivo'
+	for i in range(0,y):
+		for j in range(0,x):
+			if vert:
+				grafo.DrawText(listaMatrices[0][i][j],(i+0.5,j+0.5))
+			else:
+				grafo.DrawText(listaMatrices[0][j][i],(i+0.5,j+0.5))
 	while True:
 		event,values = win.Read()
 		if event == 'Verificar':
@@ -191,14 +181,12 @@ def play(listita,cant,vert,caps,ayuda,color):
 				posx=int(values['graph'][0])
 				posy=int(values['graph'][1])
 			if posx in range(y) and posy in range(x):
-				print(listaMatrices[2])
 				if go:	
 					if vert:
 						if listaMatrices[2][posx][posy]==actual:
 							grafo.DrawRectangle(top_left=(posx,posy+1),bottom_right=(posx+1,posy),fill_color='White',line_color=None)
 							listaMatrices[2][posx][posy]=':c'
 						else:
-							print(color[actual])
 							grafo.DrawRectangle(top_left=(posx,posy+1),bottom_right=(posx+1,posy),fill_color=color[actual],line_color=None)
 							listaMatrices[2][posx][posy]=actual
 						go=False
@@ -207,7 +195,6 @@ def play(listita,cant,vert,caps,ayuda,color):
 							grafo.DrawRectangle(top_left=(posx,posy+1),bottom_right=(posx+1,posy),fill_color='White',line_color=None)
 							listaMatrices[2][posy][posx]=':c'
 						else:
-							print(color[actual])
 							grafo.DrawRectangle(top_left=(posx,posy+1),bottom_right=(posx+1,posy),fill_color=color[actual],line_color=None)
 							listaMatrices[2][posy][posx]=actual
 					go=False
@@ -220,13 +207,6 @@ def play(listita,cant,vert,caps,ayuda,color):
 
 		if event == None or event=='Salir':
 			break
-		if event == 'Iniciar':
-			for i in range(0,y):
-				for j in range(0,x):
-					if vert:
-						grafo.DrawText(listaMatrices[0][i][j],(i+0.5,j+0.5))
-					else:
-						grafo.DrawText(listaMatrices[0][j][i],(i+0.5,j+0.5))
 
 	win.Close()
 #play([['putamadre','adjetivo','laconchadelmono'],['puta','verbo','hijo de puta'],['madre','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA'],['madra','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA']],False,True,True,[4,1,1])
