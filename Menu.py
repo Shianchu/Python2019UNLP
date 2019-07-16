@@ -1,6 +1,37 @@
 import PySimpleGUI as sg
 from config import config
 from Jugar import play
+import json
+try:
+	rta=sg.PopupYesNo('Desea elegir una oficina para modificar el estilo?')
+	if rta=='Yes':
+		with open('Oficinas.json',"r") as inFile:
+			archivo = json.load(inFile)
+			inFile.close()
+		est=[[sg.Table(values=archivo.keys(),headings=['Oficina'],justification="left")],
+		[sg.Input(key='ofi')],[sg.Button('Aceptar')]]
+		winest=sg.Window('Estilo',est)
+		while True:
+			event,values=winest.Read()
+			if event==None:
+				break
+			if event=='Aceptar':
+				try:
+					oficina=archivo[values['ofi']]
+					prom=0
+					for i in oficina:
+						prom=prom+i['temperatura']
+					prom=prom/len(oficina)
+					if (prom<20):
+						sg.ChangeLookAndFeel('SandyBeach')
+					else:
+						sg.ChangeLookAndFeel('BrownBlue')
+					break
+				except:
+					sg.Popup('Nombre de oficina no encontrado')
+		winest.Close()
+except:
+	sg.Popup('No se encuentra el archivo de oficinas')
 
 
 layout=[[sg.Text("Sopa de letras")],

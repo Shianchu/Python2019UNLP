@@ -55,13 +55,20 @@ def config(lista,cant,vert,caps,ayuda):
 		[sg.Text('Sustantivos'),sg.Input(key='sus',size=(2,3),default_text='0'),sg.Text('/'+str(cant['sus']),key='cantsus')],
 		[sg.Button('Verificar palabras')],
 		[sg.Button('Mayúsculas',key='caps'),sg.Button('Minúsculas',key='min',button_color=('Black','LightGrey'))],
-		[sg.Button('Tipografias')],[sg.Button('Estilo')],
+		[sg.Button('Registro de errores')],
 		[sg.Button('Salir'),sg.Button('Aceptar',key='Aceptar',disabled=True)]]
 	wincon=sg.Window('Configuración',con)
 	while True:
 		event,values=wincon.Read()
 		if event=='Salir' or event is None or event=='Aceptar':
 			break
+		if event=='Registro de errores':
+			try:
+				with open('Informe de error.json', 'r') as archivo:
+					erro=json.load(archivo)
+				sg.PopupScrolled(erro)
+			except:
+				sg.Popup('No se encuentran reportes de error')
 		if event=='Horizontal':
 			wincon.FindElement("Horizontal").Update(button_color=('White','DarkBlue'))
 			wincon.FindElement("Vertical").Update(button_color=('Black','LightGrey'))
@@ -167,15 +174,16 @@ def config(lista,cant,vert,caps,ayuda):
 										if i=='1':
 											escribir=True
 							if not tipo==tipop:
-								#Esto no está funcionando y me crashea algunas palabras
-								print('Hay que imprimir un informe de error de pattern')
-								# error=('Error de pattern: la palabra: '+palabra+' se detecta como '+tipop+' mientras que en wiktionary es: '+tipo)
-								# with open('Informe de error.json', 'r') as archivo:
-									# erro=json.load(archivo)
-								# error=error+erro
-								# with open('Informe de error.json', 'w') as outFile:
-									# json.dump(error,outFile)
-								# outFile.close()
+								error=('Error de pattern: la palabra: '+palabra+' se detecta como '+tipop+' mientras que en wiktionary es: '+tipo+'\n')
+								try:
+									with open('Informe de error.json', 'r') as archivo:
+										erro=json.load(archivo)
+									error=error+erro
+								except:
+									sg.Popup('No se encontraron informes de error previos, creando informe de error')
+								with open('Informe de error.json', 'w') as outFile:
+									json.dump(error,outFile)
+								outFile.close()
 							if tipo=='malo':
 								tipo=tipop
 								sg.Popup('La palabra no se reconoce como verbo, adjetivo o sustantivo en wiktionary')
