@@ -17,7 +17,7 @@ def acciones():
     
 def leer_temp():
     info_temperatura = temperatura.datos_sensor()
-    info_temperatura.update({"fecha": time.asctime(time.localtime(time.time()))})
+    info_temperatura.update({"fecha": str(time.asctime(time.localtime(time.time())))})
     return info_temperatura
  
 def guardar_temp(info):
