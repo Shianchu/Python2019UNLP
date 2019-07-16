@@ -1,6 +1,6 @@
 Integrantes: Arias, Tomás Agustín
 	     Galati, Gianlucas
 	     Ferrero, Santiago Raúl
-El programa utiliza la raspberry para crear un archivo de oficina, el cual se utiliza en la sopa de letras para look and feel.
+El programa guardar_leer utiliza la raspberry para crear un archivo de oficina, el cual se utiliza en la sopa de letras para look and feel.
 La sopa de letras se ejecuta desde  el programa menu, requiere Python 3, pattern y PySimpleGUI para ejecutar.
 Se debe presionar "Verificar Palabras" para habilitar el botón "Aceptar"
