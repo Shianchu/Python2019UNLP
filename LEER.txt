@@ -1,8 +1,6 @@
-Integrantes: Arias, Tomás Agustín
+Integrantes: Arias, TomÃ¡s AgustÃ­n
 	     Galati, Gianlucas
-	     Ferrero, Santiago Raúl
-
-Se ejecuta desde menu, requiere Python 3, pattern y PySimpleGUI para ejecutar.
-El reporte de errores está comentado para evitar problemas con ciertas palabras.
-Las opciones "Tipografías" y "Estilo" no están implementadas.
-Se debe presionar "Verificar Palabras" para habilitar el botón "Aceptar"
+	     Ferrero, Santiago RaÃºl
+El programa utiliza la raspberry para crear un archivo de oficina, el cual se utiliza en la sopa de letras para look and feel.
+La sopa de letras se ejecuta desde  el programa menu, requiere Python 3, pattern y PySimpleGUI para ejecutar.
+Se debe presionar "Verificar Palabras" para habilitar el botÃ³n "Aceptar"
