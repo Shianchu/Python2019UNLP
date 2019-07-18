@@ -121,7 +121,7 @@ def play(listita,cant,vert,caps,ayuda,color):
 
 	layout=[[sg.Graph(canvas_size=(30*y,30*x), graph_bottom_left=(-0.1,-0.1), graph_top_right=(y+0.1,x+0.1), background_color='White', enable_events= True, key= 'graph', visible= True)],
 			[sg.Button('Ayuda',disabled=True,key='Ayuda')],
-			[sg.Button('Sustantivo'),sg.Button('Adjetivo'),sg.Button('Verbo')],
+			[sg.Button('Sustantivo',button_color=('White',color['sustantivo'])),sg.Button('Adjetivo',button_color=('White',color['adjetivo'])),sg.Button('Verbo',button_color=('White',color['verbo']))],
 			[sg.Cancel('Salir'),sg.Button('Verificar')]]
 
 	win=sg.Window('Grafiquito',layout).Finalize()
@@ -164,7 +164,14 @@ def play(listita,cant,vert,caps,ayuda,color):
 				sg.Popup('Felicidades, completaste el juego!')
 				break
 			else:
-				sg.Popup('No es la solucion correcta')
+				errores={'sustantivo':0,'adjetivo':0,'verbo':0,':c':0}
+				for i in range(len(listaMatrices[1])):
+					for j in range(len(listaMatrices[1][i])):
+						if  not (listaMatrices[1][i][j]==listaMatrices[2][i][j]):
+							print(listaMatrices[2][i][j])
+							print(listaMatrices[1][i][j])
+							errores[listaMatrices[1][i][j]]=errores[listaMatrices[1][i][j]]+1
+				sg.Popup('No es la solucion correcta, hay ' + str(errores['sustantivo']) + ' letras de sustantivo sin marcar correctamente, ' + str(errores['adjetivo']) + ' de adjetivos y ' + str(errores['verbo']) + ' de verbos, hay ' + str(errores[':c']) + ' letras marcadas que no forman parte de una palabra')
 		if event == 'Ayuda':
 			defino=''
 			for i in defi:
@@ -209,4 +216,3 @@ def play(listita,cant,vert,caps,ayuda,color):
 			break
 
 	win.Close()
-#play([['putamadre','adjetivo','laconchadelmono'],['puta','verbo','hijo de puta'],['madre','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA'],['madra','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA'],['madre','sustantivo','SEÑORAAAAA']],False,True,True,[4,1,1])

@@ -66,7 +66,17 @@ def config(lista,cant,vert,caps,ayuda):
 			try:
 				with open('Informe de error.json', 'r') as archivo:
 					erro=json.load(archivo)
-				sg.PopupScrolled(erro)
+				fuente=sg.PopupGetText('Ingrese nombre de la fuente a utilizar')
+				try:
+					lay=[[sg.Text(erro, font=(fuente, 11))]]
+				except:
+					sg.PopupText('No se encontró la fuente ingresada, se utilizará Arial')
+					lay=[[sg.Text(erro, font=('Arial', 11))]]
+				win=sg.Window('Prueba',lay)
+				event,values=win.Read();
+				while True:
+					if event==None:
+						break
 			except:
 				sg.Popup('No se encuentran reportes de error')
 		if event=='Horizontal':
@@ -112,19 +122,19 @@ def config(lista,cant,vert,caps,ayuda):
 				if event=='Eliminar':
 					for i in lista:
 						if values['elim'] in i:
-							tip=i[1]
+							tipo=i[1]
 							lista.remove(i)
 					winpal.FindElement('tabla').Update(values=lista)
 					if tipo=='sustantivo':
-						cant['sus']=cant['sus']+1
+						cant['sus']=cant['sus']-1
 						wincon.FindElement('cantsus').Update(value='/'+str(cant['sus']))
 					else:
 						if tipo=='adjetivo':
-							cant['adj']=cant['adj']+1
+							cant['adj']=cant['adj']-1
 							wincon.FindElement('cantadj').Update(value='/'+str(cant['adj']))
 						else:
 							if tipo=='verbo':
-								cant['verb']=cant['verb']+1
+								cant['verb']=cant['verb']-1
 								wincon.FindElement('cantverb').Update(value='/'+str(cant['verb']))
 
 				if event=='Ingresar':
