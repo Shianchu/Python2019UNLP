@@ -8,6 +8,9 @@ def play(listita,cant,vert,caps,ayuda,color):
 	lista=[]
 	defi=[]
 	tipo=[]
+	cant2=[0,0,0]
+	for i in range(len(cant)):
+		cant2[i]=cant[i]
 	while not cant==[0,0,0]:
 		i=ran.randrange(1,len(listita))
 		palabra=listita[i]
@@ -161,15 +164,13 @@ def play(listita,cant,vert,caps,ayuda,color):
 		event,values = win.Read()
 		if event == 'Verificar':
 			if listaMatrices[1]==listaMatrices[2]:
-				sg.Popup('Felicidades, completaste el juego!')
+				sg.Popup('Felicidades, completaste el juego! Encontraste '+str(cant2[0])+' sustantivos, '+str(cant2[1])+' adjetivos y '+str(cant2[2])+' verbos')
 				break
 			else:
 				errores={'sustantivo':0,'adjetivo':0,'verbo':0,':c':0}
 				for i in range(len(listaMatrices[1])):
 					for j in range(len(listaMatrices[1][i])):
 						if  not (listaMatrices[1][i][j]==listaMatrices[2][i][j]):
-							print(listaMatrices[2][i][j])
-							print(listaMatrices[1][i][j])
 							errores[listaMatrices[1][i][j]]=errores[listaMatrices[1][i][j]]+1
 				sg.Popup('No es la solucion correcta, hay ' + str(errores['sustantivo']) + ' letras de sustantivo sin marcar correctamente, ' + str(errores['adjetivo']) + ' de adjetivos y ' + str(errores['verbo']) + ' de verbos, hay ' + str(errores[':c']) + ' letras marcadas que no forman parte de una palabra')
 		if event == 'Ayuda':
