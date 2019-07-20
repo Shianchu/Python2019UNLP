@@ -2,5 +2,7 @@ Integrantes: Arias, Tomás Agustín
 	     Galati, Gianlucas
 	     Ferrero, Santiago Raúl
 El programa guardar_leer utiliza la raspberry para crear un archivo de oficina, el cual se utiliza en la sopa de letras para look and feel.
+El programa guardar_leer es un programa el cual utiliza modulos de mostrar_temp y lector_temperatura  del repositorio de sensores dado por la catedra y combinados esos modulos en un solo archivo para poder realizar el sensado de temperatura al igual que el de sonido.
+Se aclara que no se realizo prueba alguna del funcionamiento del programa guardar_leer
 La sopa de letras se ejecuta desde  el programa menu, requiere Python 3, pattern y PySimpleGUI para ejecutar.
 Se debe presionar "Verificar Palabras" para habilitar el botón "Aceptar"
